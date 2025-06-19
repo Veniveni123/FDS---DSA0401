@@ -1,0 +1,39 @@
+!pip install openpyxl
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Use pd.read_excel to read the .xlsx file
+df = pd.read_excel("/content/marks.xlsx")
+
+
+print("First 5 rows:\n", df.head())
+print("\nLast 5 rows:\n", df.tail())
+
+
+print("\nDescriptive statistics:\n", df.describe())
+
+print("\n3rd to 6th rows:\n", df.iloc[2:6])
+
+print("\nRows with M3 > 84:\n", df[df['M3'] > 84])
+
+
+print("\nRows with missing values:\n", df[df.isnull().any(axis=1)])
+
+df_cleaned = df.dropna()
+print("\nData after removing missing values:\n", df_cleaned)
+
+
+sorted_df = df.sort_values(by='M1', ascending=False)
+print("\nSorted by M1 descending:\n", sorted_df)
+
+df[['NAME', 'M1', 'M2', 'M3']].set_index('NAME').plot(kind='bar')
+plt.title('Marks of Students')
+plt.ylabel('Marks')
+plt.xlabel('Students')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+
+print("\nRows 3 to 6, Columns M2 and M3:\n", df.loc[3:6, ['M2', 'M3']])
